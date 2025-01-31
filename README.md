@@ -1,4 +1,4 @@
-# DigitalLocalShop
+
 # Community-Driven Local Shopping Platform
 
 ## Introduction
