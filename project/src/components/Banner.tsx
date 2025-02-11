@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface BannerProps {
   title: string;
@@ -9,6 +10,12 @@ interface BannerProps {
 }
 
 const Banner = ({ title, subtitle, buttonText, image, backgroundColor }: BannerProps) => {
+  const navigate = useNavigate();
+
+  const handleExploreClick = () => {
+    navigate('/explore');
+  };
+
   return (
     <div className={`${backgroundColor} rounded-lg overflow-hidden relative`}>
       {/* Background Pattern */}
@@ -30,7 +37,12 @@ const Banner = ({ title, subtitle, buttonText, image, backgroundColor }: BannerP
           <p className="text-white/90 mb-6 text-lg">
             {subtitle}
           </p>
-          <button className="bg-white text-[#fc8019] px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+          <button 
+            onClick={handleExploreClick}
+            className="bg-white text-[#fc8019] px-8 py-3 rounded-full font-medium 
+              hover:bg-opacity-90 transition-colors shadow-lg hover:shadow-xl 
+              transform hover:-translate-y-0.5 transition-all duration-200"
+          >
             {buttonText}
           </button>
         </div>
