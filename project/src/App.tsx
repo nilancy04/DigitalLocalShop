@@ -1,24 +1,45 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage'; // Move existing home content to this component
 import Login from './pages/Login'; // Import the Login component
 import ExploreShops from './pages/ExploreShops';
+import ViewShop from './pages/ViewShop';
 import SellerDashboard from './pages/SellerDashboard';
+import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
+import Notifications from './pages/Notifications';
+import Offers from './pages/Offers';
+import SignIn from './pages/SignIn';
+import SellerOrders from './pages/SellerOrders';
+import ModeSelection from './pages/ModeSelection';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/explore" element={<ExploreShops />} />
-          <Route path="/seller" element={<SellerDashboard />} />
-          <Route path="/login" element={<Login />} /> // Add route for Login page
-        </Routes>
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/explore" element={<ExploreShops />} />
+            <Route path="/shop/:shopId" element={<ViewShop />} />
+            <Route path="/seller" element={<SellerDashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/mode-selection" element={<ModeSelection />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/offers" element={<Offers />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/seller/orders" element={<SellerOrders />} />
+          </Routes>
+          <Toaster position="top-right" />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 

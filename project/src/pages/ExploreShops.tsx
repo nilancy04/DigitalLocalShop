@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Star, Clock, MapPin, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import DistanceFilter from '../components/DistanceFilter';
 import ImageWithFallback from '../components/ImageWithFallback';
 
@@ -20,6 +21,7 @@ interface Shop {
 const ExploreShops = () => {
   const [selectedDistance, setSelectedDistance] = useState(5);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const categories = [
     'All Shops',
@@ -131,6 +133,10 @@ const ExploreShops = () => {
     return matchesCategory && matchesDistance;
   });
 
+  const handleViewShop = (shopId: string) => {
+    navigate(`/shop/${shopId}`);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-6">Explore Local Shops</h1>
@@ -226,7 +232,10 @@ const ExploreShops = () => {
                       ))}
                     </div>
 
-                    <button className="w-full mt-4 bg-[#fc8019] text-white py-2 rounded-md hover:bg-[#db6c12] transition-colors">
+                    <button 
+                      onClick={() => handleViewShop(shop.id)}
+                      className="w-full mt-4 bg-[#fc8019] text-white py-2 rounded-md hover:bg-[#db6c12] transition-colors"
+                    >
                       View Shop
                     </button>
                   </div>

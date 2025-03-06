@@ -1,23 +1,37 @@
 import { useState } from 'react';
-import { MapPin, Search, ShoppingCart, Heart, User, Bell, Store } from 'lucide-react';
+import { MapPin, Search, ShoppingCart, Heart, User, Bell, Store, ShoppingBag } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
+import LocationModal from './LocationModal';
+import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
   const [location, setLocation] = useState('Select Location');
-  const [cartCount, setCartCount] = useState(0);
   const [isSellerMode, setIsSellerMode] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const navigate = useNavigate();
+  const { totalItems } = useCart();
 
   const handleLocationClick = () => {
-    // TODO: Implement location selection functionality
-    console.log('Location button clicked');
+    setShowLocationModal(true);
+  };
+
+  const handleLocationSelect = (selectedLocation: string) => {
+    setLocation(selectedLocation);
+    setShowLocationModal(false);
   };
 
   const toggleInterface = () => {
     setIsSellerMode(!isSellerMode);
-    // TODO: Implement interface switch logic
-    console.log(`Switched to ${isSellerMode ? 'customer' : 'seller'} interface`);
+    if (!isSellerMode) {
+      navigate('/seller');
+    } else {
+      navigate('/');
+    }
+  };
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -63,35 +77,44 @@ const Navbar = () => {
           {/* Navigation Links */}
           <div className="flex items-center space-x-6">
             <button 
-              onClick={() => navigate('/explore')}
+              onClick={() => handleNavigation('/explore')}
               className="flex items-center space-x-2 hover:text-[#fc8019]"
             >
               <span>Explore</span>
             </button>
+
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => handleNavigation('/notifications')}
               className="flex items-center space-x-2 hover:text-[#fc8019]"
             >
               <Bell size={20} />
               <span className="text-xs text-white bg-[#ffa700] px-1 rounded absolute -mt-4 ml-3">2</span>
             </button>
+
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => handleNavigation('/offers')}
               className="flex items-center space-x-2 hover:text-[#fc8019]"
             >
               <span>Offers</span>
               <span className="text-xs text-white bg-[#ffa700] px-1 rounded">NEW</span>
             </button>
-            <button className="flex items-center space-x-2 hover:text-[#fc8019]">
+
+            <button 
+              onClick={() => handleNavigation('/wishlist')}
+              className="flex items-center space-x-2 hover:text-[#fc8019]"
+            >
               <Heart size={20} />
               <span>Wishlist</span>
             </button>
-            <button className="flex items-center space-x-2 hover:text-[#fc8019]">
+
+            <button 
+              onClick={() => handleNavigation('/signin')}
+              className="flex items-center space-x-2 hover:text-[#fc8019]"
+            >
               <User size={20} />
-              <span onClick={() => navigate('/login')}>Sign In</span>
+              <span>Sign In</span>
             </button>
 
-            {/* Interface Toggle */}
             <button
               onClick={toggleInterface}
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-full transition-all duration-300 ${
@@ -106,18 +129,30 @@ const Navbar = () => {
               </span>
             </button>
 
-            <button className="flex items-center space-x-2 hover:text-[#fc8019] relative">
-              <ShoppingCart size={20} />
-              <span>{isSellerMode ? 'Orders' : 'Cart'}</span>
-              {!isSellerMode && cartCount > 0 && (
+            <button 
+              onClick={() => handleNavigation('/cart')}
+              className="flex items-center space-x-2 hover:text-[#fc8019] relative"
+            >
+              <ShoppingBag size={20} />
+              <span>Cart</span>
+              {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#fc8019] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount}
+                  {totalItems}
                 </span>
               )}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Location Modal */}
+      {showLocationModal && (
+        <LocationModal
+          isOpen={showLocationModal}
+          onClose={() => setShowLocationModal(false)}
+          onSelectLocation={handleLocationSelect}
+        />
+      )}
     </nav>
   );
 };
