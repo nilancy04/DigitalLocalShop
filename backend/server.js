@@ -11,7 +11,7 @@ const db = mysql.createConnection({
     // Ensure the database connection is successful
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: 'root123@',
     database: 'dls_db'
 })
 
