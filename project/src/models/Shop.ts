@@ -40,6 +40,16 @@ const shopSchema = new Schema<Shop>({
     upiIds: [String]
   },
 
+  businessHours: {
+    type: Map,
+    of: {
+      isOpen: { type: Boolean, required: true },
+      timings: {
+        open: { type: String, required: true },
+        close: { type: String, required: true }
+      }
+    }
+  },
   metrics: {
     rating: { type: Number, default: 0, index: true },
     reviewCount: { type: Number, default: 0 },
@@ -66,4 +76,4 @@ shopSchema.methods.isOpen = function() {
   );
 };
 
-export const ShopModel = mongoose.model<Shop>('Shop', shopSchema); 
+export const ShopModel = mongoose.model<Shop>('Shop', shopSchema);

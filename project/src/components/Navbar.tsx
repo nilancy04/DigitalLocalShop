@@ -68,11 +68,17 @@ const Navbar = () => {
             >
               <span>Explore</span>
             </button>
-            <button className="flex items-center space-x-2 hover:text-[#fc8019]">
+            <button 
+              onClick={() => navigate('/login')}
+              className="flex items-center space-x-2 hover:text-[#fc8019]"
+            >
               <Bell size={20} />
               <span className="text-xs text-white bg-[#ffa700] px-1 rounded absolute -mt-4 ml-3">2</span>
             </button>
-            <button className="flex items-center space-x-2 hover:text-[#fc8019]">
+            <button 
+              onClick={() => navigate('/login')}
+              className="flex items-center space-x-2 hover:text-[#fc8019]"
+            >
               <span>Offers</span>
               <span className="text-xs text-white bg-[#ffa700] px-1 rounded">NEW</span>
             </button>
@@ -82,7 +88,7 @@ const Navbar = () => {
             </button>
             <button className="flex items-center space-x-2 hover:text-[#fc8019]">
               <User size={20} />
-              <span>Sign In</span>
+              <span onClick={() => navigate('/login')}>Sign In</span>
             </button>
 
             {/* Interface Toggle */}
@@ -116,4 +122,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;
