@@ -1,7 +1,11 @@
-import React from 'react';
-import { Plus, Package, TrendingUp, Users, Clock, Settings, DollarSign } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plus, Package, TrendingUp, Users, Clock, Settings, DollarSign, Upload } from 'lucide-react';
+import ProductManagement from '../components/ProductManagement';
+import CsvUpload from '../components/CsvUpload';
 
 const SellerDashboard = () => {
+  const [showCsvUpload, setShowCsvUpload] = useState(false);
+
   const stats = [
     { title: 'Total Sales', value: '₹12,450', change: '+12%', icon: DollarSign },
     { title: 'Total Orders', value: '156', change: '+8%', icon: Package },
@@ -20,10 +24,6 @@ const SellerDashboard = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Seller Dashboard</h1>
-        <button className="flex items-center space-x-2 bg-[#fc8019] text-white px-4 py-2 rounded-lg hover:bg-[#db6c12] transition-colors">
-          <Plus size={20} />
-          <span>Add New Product</span>
-        </button>
       </div>
 
       {/* Stats Grid */}
@@ -44,6 +44,11 @@ const SellerDashboard = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Product Management Section */}
+      <div className="mb-8">
+        <ProductManagement />
       </div>
 
       {/* Main Content Grid */}
@@ -100,6 +105,16 @@ const SellerDashboard = () => {
                 </div>
                 <span className="text-gray-400">→</span>
               </button>
+              <button 
+                onClick={() => setShowCsvUpload(!showCsvUpload)}
+                className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <div className="flex items-center space-x-3">
+                  <Upload className="text-[#fc8019]" size={20} />
+                  <span className="font-medium text-gray-700">Upload Products CSV</span>
+                </div>
+                <span className="text-gray-400">→</span>
+              </button>
               <button className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
                 <div className="flex items-center space-x-3">
                   <Settings className="text-[#fc8019]" size={20} />
@@ -109,6 +124,26 @@ const SellerDashboard = () => {
               </button>
             </div>
           </div>
+
+          {/* CSV Upload Modal */}
+          {showCsvUpload && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg max-w-2xl w-full mx-4">
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold text-gray-800">Upload Products CSV</h2>
+                    <button
+                      onClick={() => setShowCsvUpload(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <CsvUpload />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Store Performance */}
           <div className="bg-white rounded-lg shadow-sm p-6 mt-6">

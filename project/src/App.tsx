@@ -11,10 +11,9 @@ import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
 import Notifications from './pages/Notifications';
 import Offers from './pages/Offers';
-import SignIn from './pages/SignIn';
-import SellerOrders from './pages/SellerOrders';
 import ModeSelection from './pages/ModeSelection';
 import { CartProvider } from './context/CartContext';
+import SellerOrders from './pages/SellerOrders';
 
 function App() {
   return (
@@ -33,10 +32,22 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/offers" element={<Offers />} />
-            <Route path="/signin" element={<SignIn />} />
             <Route path="/seller/orders" element={<SellerOrders />} />
           </Routes>
-          <Toaster position="top-right" />
+          <Toaster 
+            position="top-right"
+            reverseOrder={false}
+            containerStyle={{}}
+            containerClassName=""
+            gutter={8}
+            toastOptions={{
+              duration: 5000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
         </div>
       </Router>
     </CartProvider>

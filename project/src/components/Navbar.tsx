@@ -108,7 +108,7 @@ const Navbar = () => {
             </button>
 
             <button 
-              onClick={() => handleNavigation('/signin')}
+              onClick={() => handleNavigation('/login')}
               className="flex items-center space-x-2 hover:text-[#fc8019]"
             >
               <User size={20} />
